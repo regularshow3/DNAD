@@ -29,7 +29,7 @@ function addBubbleEvent(bubble){
             type: "arrayBuffer"
         }
         
-        fetch('https://api.elevenlabs.io/v1/text-to-speech/uju3wxzG5OhpWcoi3SMy', options)
+        fetch('https://api.elevenlabs.io/v1/text-to-speech/wP7XBmkAmRwrjtfK2KeY', options)
             .then(async (response) => {
                 const arrayBuffer = await response.arrayBuffer();
                 const blob = new Blob([arrayBuffer], { type: 'audio/wav' });
@@ -65,7 +65,7 @@ async function textGen(data) {
         "https://api-inference.huggingface.co/models/google/gemma-1.1-7b-it",
         {
             headers: {
-                Authorization: `Bearer ${hugging_face_key}`,
+                Authorization: `Bearer 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`,
                 "Content-Type": "application/json"
             },
             method: "POST",

@@ -13,16 +13,18 @@ async function query(data) {
 	const response = await fetch(
 		"https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
 		{
-			headers: { Authorization: `Bearer ${hugging_face_key}`,
-                    "Content-Type": "application/json"
-        },
+			headers: {
+			    Authorization: `Bearer ${hugging_face_key}`, 
+                "Content-Type": "application/json"
+            },
 			method: "POST",
 			body: JSON.stringify(data),
 		}
 	);
 	const result = await response.json();
-	return result;
+	return result;    
 }
+
 
 downloadButton.addEventListener('click', () => {
     const filename = "records.txt";
@@ -53,27 +55,25 @@ async function submit() {
             query({ "inputs": input, "parameters": { "return_full_text": false } }).then(async (response) => {
                 let aiContentValue = await contentFilterText(response[0].generated_text);
                 if (aiContentValue == 1) {
-
-                    let AIResult = response[0].generated_text
-                    const userInput = document.createElement("p")
-                    const aiOuput = document.createElement("p")
+                    let AIresult = response[0].generated_text
+                    const userInput = document.createElement('p')
+                    const aiOutput = document.createElement('p')
                     userInput.classList.add("user-bubble")
-                    userInput.classList.add("ai-bubble")
-                    let cutOff = stopAtLastPeriod(AIResult)
+                    aiOutput.classList.add("ai-bubble")
+                    let cutOff = stopAtLastPeriod(AIresult)
 
                     userInput.innerHTML = input
-                    aiOuput.innerHTML = cutOff
+                    aiOutput.innerHTML = cutOff
                     textFrame.appendChild(userInput)
-                    textFrame.appendChild(aiOuput)
+                    textFrame.appendChild(aiOutput)
 
-                    textFrame.scrollTop = textFrame.scrollHeight;
-                    entry.value = "";
-                    entry.placeholder = "Ask me a question...";
+                    textFrame.scrollTop = textFrame.scrollHeight
+                    entry.value = ""
+                    entry.placeholder = "Ask me a question..."
 
-                    let noBlankLines = removeBlankLines(cutOff);
-                    records.push("User: " + userInput.innerHTML);
-                    records.push("AI: " + noBlankLines);
-
+                    let noBlankLines = removeBlankLines(cutOff)
+                    records.push("User: " + userInput.innerHTML)
+                    records.push("AI: " + noBlankLines)
                 } else {
                     setPlaceholder(aiContentValue);
                 }
